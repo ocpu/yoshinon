@@ -1,0 +1,12 @@
+{
+  "name": "yoshinon",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "debug": "nodejs --inspector=5858 ./Client.js"
+  },
+  "dependencies": {
+    "ws": "^2.3.1",
+    "left-pad":"1.1.3"
+  }
+}
