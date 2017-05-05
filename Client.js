@@ -51,21 +51,16 @@ class Client extends EventEmitter {
         return this.requestHandler.request('GET', Endpoints.BOT_GATEWAY)
     }
 
-    /**
-     * Connect to discord
-     * 
-     * @returns {void}
-     */
     connect() {
         const promise = this.bot ? this.getBotGateway() : this.getGateway()
         promise.then(gateway => {
-            if (this.client.bot) {
-            if (this.client.numShards) {
-                if (this.client.numShards < gateway.shards)
-                    console.warn(`The specified shard amount (${this.client.numShards}) is below the recommended shard amount (${gateway.shards})`)
-            } else this.client.numShards = gateway.shards
-        }
-        const socket = this.socket = new WebSocket(`${gateway.url}?v=6&encoding=json`)
+            if (this.bot) {
+                if (this.numShards) {
+                    if (this.numShards < gateway.shards)
+                        console.warn(`The specified shard amount (${this.numShards}) is below the recommended shard amount (${gateway.shards})`)
+                } else this.numShards = gateway.shards
+            }
+            this.gs = new WebSocket(`${gateway.url}?v=6&encoding=json`)
         })
     }
 

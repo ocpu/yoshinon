@@ -1,33 +1,39 @@
 import {IncomingMessage} from "http"
 import {Socket} from "net"
 declare class RequestBuilder {
-    constructor(url: string)
-    setHeader(name: string, value: string, condition: boolean | (() => boolean)): this
-    body(body: Buffer): this
-    method(method: string): this
-    get(): this
-    post(): this
-    put(): this
-    patch(): this
-    delete(): this
-    copy(): this
-    head(): this
-    options(): this
-    link(): this
-    unlink(): this
-    purge(): this
-    lock(): this
-    unlock(): this
-    propfind(): this
-    view(): this
-    send(): void
-    on(event: 'abort', listener: () => void): this
-    on(event: 'aborted', listener: () => void): this
-    on(event: 'connect', listener: (response: IncomingMessage, socket: Socket, head: Buffer) => void): this
-    on(event: 'continue', listener: () => void): this
-    on(event: 'response', listener: (response: IncomingMessage) => void): this
-    on(event: 'socket', listener: (socket: Socket) => void): this
-    on(event: 'upgrade', listener: (response: IncomingMessage, socket: Socket, head: Buffer) => void): this
+    static request(method: string, url: string): RequestBuilder
+    header(name: string, value: string): this
+    header(name: string, value: string, condition: boolean | (() => boolean)): this
+    headers(headers: Object): this
+    static get(url: string): RequestBuilder
+    static post(url: string): RequestBuilder
+    static put(url: string): RequestBuilder
+    static patch(url: string): RequestBuilder
+    static delete(url: string): RequestBuilder
+    static copy(url: string): RequestBuilder
+    static head(url: string): RequestBuilder
+    static options(url: string): RequestBuilder
+    static link(url: string): RequestBuilder
+    static unlink(url: string): RequestBuilder
+    static purge(url: string): RequestBuilder
+    static lock(url: string): RequestBuilder
+    static unlock(url: string): RequestBuilder
+    static propfind(url: string): RequestBuilder
+    static view(url: string): RequestBuilder
+    send(body?: Buffer): Promise<Response>
+}
+
+declare class Response {
+
+    readonly headers: Object
+    readonly status: number
+    readonly message: string
+
+    buffer(): Promise<Buffer>
+
+    text(): Promise<string>
+
+    json(): Promise<Object>
 }
 
 export = RequestBuilder
